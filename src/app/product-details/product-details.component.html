@@ -1,2 +1,12 @@
-<p>{{id}}</p>
+<div *ngIf="product">
+
 <button>Add To Cart</button>
+<button (click)="deleteProduct()">Delete Item</button>
+<input type="number" placeholder="Enter quantity yout want to buy" #quantity/>
+<button (click)="checkOut(quantity.value)">Checkout</button>
+<h1>{{product.name}}</h1>
+<h2>{{product.price}}</h2>
+<h2>{{product.category}}</h2>
+<h2>{{product.description}}</h2>
+<img src={{product.image}} alt={{product.name}} />
+</div>

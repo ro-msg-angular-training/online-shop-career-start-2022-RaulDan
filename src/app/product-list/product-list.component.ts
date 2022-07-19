@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Product } from 'src/Product';
+import { Observable } from 'rxjs';
+
+import { backendURL } from 'src/utils';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -7,7 +12,11 @@ import { Router } from '@angular/router';
 })
 export class ProductListComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  products$: Observable<Product[]> | undefined;
+  
+  constructor(private router: Router,
+    private http:HttpClient
+    ) { }
 
   show=false;
 
@@ -19,27 +28,11 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['/productDetails',id])
   }
 
-  products=[
-    {
-      id:2,
-      name:"Laptop",
-      price:200
-    }
-    ,
-    {
-      id:3,
-      name:"PC",
-      price:350
-    }
-    ,
-    {
-      id:4,
-      name:"Gaming Laptop",
-      price:400
-    }
-  ]
+  
 
   ngOnInit(): void {
+
+    this.products$=this.http.get<Product[]>(backendURL+'products');
   }
 
 }
