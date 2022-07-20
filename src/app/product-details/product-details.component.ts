@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { backendURL } from 'src/utils';
 import { ProductItem } from 'src/ProductItem';
 import { Order } from 'src/Order';
+import { ProductService } from '../Services/productService';
 
 @Component({
   selector: 'app-product-details',
@@ -20,8 +21,11 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route:ActivatedRoute,
     private router:Router,
-    private http:HttpClient
+    private http:HttpClient,
+    private productService:ProductService
   ) { }
+
+  show:Boolean=false
 
   ngOnInit(): void {
     this.id=Number(this.route.snapshot.paramMap.get('id'));// Get product id
@@ -50,6 +54,11 @@ export class ProductDetailsComponent implements OnInit {
     this.http.post((backendURL+"post"),data,{ responseType: 'text' }).subscribe(()=>{
       alert("Order created!")
     })
+  }
+
+  // Method to edit a product
+  editProduct():void{
+    this.product$?.subscribe((data:ProductItem)=>{ this.productService.modifyProduct(false,data)})
   }
 
 }

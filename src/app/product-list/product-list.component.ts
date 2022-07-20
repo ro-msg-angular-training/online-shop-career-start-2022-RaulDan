@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 
 import { backendURL } from 'src/utils';
 import { HttpClient } from '@angular/common/http';
+
+import { ProductService } from '../Services/productService';
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -15,7 +18,8 @@ export class ProductListComponent implements OnInit {
   products$: Observable<Product[]> | undefined;
   
   constructor(private router: Router,
-    private http:HttpClient
+    private http:HttpClient,
+    private productService:ProductService
     ) { }
 
   show=false;
@@ -28,7 +32,10 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['/productDetails',id])
   }
 
-  
+  addProduct():void{
+    this.router.navigate(['/addProduct'])
+    // this.productService.modifyProduct(false,undefined)
+  }
 
   ngOnInit(): void {
 

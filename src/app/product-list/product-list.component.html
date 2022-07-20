@@ -1,3 +1,5 @@
+<button class="button" (click)="addProduct()">Add A New Product</button>
+
 <button (click)="handleClick()" class="button">
     Show More Products
 </button>
@@ -13,22 +15,23 @@
                 </div>
 
             </div>
-            
+
             <div *ngIf="(products$ | async) as products">
-            <div *ngFor="let product of products">
-                <div class="table-content">
-                    <div class="table-row">
-                        <div class="table-data">{{product.name}}</div>
-                        <div class="table-data">{{product.price}}</div>
-                        <div class="table-data"><button (click)="redirect(product.id)">Details</button></div>
-    
+                <div *ngFor="let product of products">
+                    <div class="table-content">
+                        <div class="table-row">
+                            <div class="table-data">{{product.name}}</div>
+                            <div class="table-data">{{product.price}}</div>
+                            <div class="table-data"><button (click)="redirect(product.id)">Details</button></div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
             </div>
         </div>
+        <app-product-form></app-product-form>
 
 
     </div>

@@ -1,0 +1,45 @@
+<!-- app-product-form -->
+
+<div *ngIf="productService.show">
+<form  [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <label  for="id">ID: </label>
+    <br/>
+    <div *ngIf="add;else edit">
+            <input id="id" type="text" formControlName="id">
+    </div>
+    <ng-template #edit>
+        <input id="id" type="text" formControlName="id" readonly>
+    </ng-template>
+    
+    <br/>
+    <label  for="name">Product Name</label>
+    <br/>
+    <input  id="name" formControlName="name"  [placeholder]="add ? '' : product!.name " >
+    <br/>
+
+    <label  for="category">Category</label>
+    <br/>
+    <input  id="category" formControlName="category" [placeholder]="add ? '' : product!.category " >
+    <br/>
+
+    <label  for="price">Price</label>
+    <br/>
+    <input  id="price" formControlName="price"  [placeholder]="add ? '' : product!.price " >
+
+    <br/>
+    <label for="image">Image</label>
+    <br/>
+    <input id="image" formControlName="image"  [placeholder]="add ? '' : product!.image " >
+
+    <br/>
+    <label for="description">Description</label>
+    <br/>
+    <input id="description" formControlName="description"  [placeholder]="add ? '' : product!.description " >
+    <br/>
+    <button type="button">Cancel</button>
+    <button type="submit">Save Changes</button>
+
+
+</form>
+</div>
+

@@ -8,18 +8,26 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { ProductFormComponent } from './product-form/product-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AddProductFormComponent } from './add-product-form/add-product-form.component';
+import { EditProductFormComponent } from './edit-product-form/edit-product-form.component';
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
     ProductListComponent,
     ProductDetailsComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    ProductFormComponent,
+    AddProductFormComponent,
+    EditProductFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
