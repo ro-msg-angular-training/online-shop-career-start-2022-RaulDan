@@ -7,12 +7,14 @@ import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
     ProductListComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    NotFoundPageComponent
   ],
   imports: [
     BrowserModule,

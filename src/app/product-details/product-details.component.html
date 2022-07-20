@@ -1,4 +1,4 @@
-<div *ngIf="product">
+<div *ngIf="(product$ | async) as product">
 
 <button>Add To Cart</button>
 <button (click)="deleteProduct()">Delete Item</button>
