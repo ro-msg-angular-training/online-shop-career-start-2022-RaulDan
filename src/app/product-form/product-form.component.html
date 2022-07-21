@@ -1,42 +1,37 @@
 <!-- app-product-form -->
 
 <div *ngIf="productService.show">
-<form  [formGroup]="productForm" (ngSubmit)="onSubmit()">
+<form  [formGroup]="productForm" (ngSubmit)="onSubmit(productService.product!)">
     <label  for="id">ID: </label>
     <br/>
-    <div *ngIf="add;else edit">
-            <input id="id" type="text" formControlName="id">
-    </div>
-    <ng-template #edit>
-        <input id="id" type="text" formControlName="id" readonly>
-    </ng-template>
+    <input id="id" type="text" formControlName="id" readonly placeholder={{productService.product?.id}}>
     
     <br/>
     <label  for="name">Product Name</label>
     <br/>
-    <input  id="name" formControlName="name"  [placeholder]="add ? '' : product!.name " >
+    <input  id="name" formControlName="name"  placeholder={{productService.product?.name}} >
     <br/>
 
     <label  for="category">Category</label>
     <br/>
-    <input  id="category" formControlName="category" [placeholder]="add ? '' : product!.category " >
+    <input  id="category" formControlName="category" placeholder={{productService.product?.category}} >
     <br/>
 
     <label  for="price">Price</label>
     <br/>
-    <input  id="price" formControlName="price"  [placeholder]="add ? '' : product!.price " >
+    <input  id="price" formControlName="price"  placeholder={{productService.product?.price}} >
 
     <br/>
     <label for="image">Image</label>
     <br/>
-    <input id="image" formControlName="image"  [placeholder]="add ? '' : product!.image " >
+    <input id="image" formControlName="image"  placeholder={{productService.product?.image}} >
 
     <br/>
     <label for="description">Description</label>
     <br/>
-    <input id="description" formControlName="description"  [placeholder]="add ? '' : product!.description " >
+    <input id="description" formControlName="description"  placeholder={{productService.product?.description}} >
     <br/>
-    <button type="button">Cancel</button>
+    <button type="button" (click)="cancel(productService.product!)">Cancel</button>
     <button type="submit">Save Changes</button>
 
 

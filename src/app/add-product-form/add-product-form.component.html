@@ -1,11 +1,5 @@
 <form  [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
-    <label  for="id">ID: </label>
-    <br/>
-    <input id="id" type="text" formControlName="id">
-    <br/>
-    <span class=requiredMessage  *ngIf= " this.addProductForm.get('id')?.invalid">This field is required</span>
-    <br/>
-
+    
     <label  for="name">Product Name</label>
     <br/>
     <input  id="name" formControlName="name" >

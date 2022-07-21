@@ -6,6 +6,7 @@ import { backendURL } from 'src/utils';
 import { ProductItem } from 'src/ProductItem';
 import { Order } from 'src/Order';
 import { ProductService } from '../Services/productService';
+import { ShoppingCartItem } from 'src/ShoppingCardItem';
 
 @Component({
   selector: 'app-product-details',
@@ -25,6 +26,11 @@ export class ProductDetailsComponent implements OnInit {
     private productService:ProductService
   ) { }
 
+  isAdmin:string|null=sessionStorage.getItem('isAdmin');
+  isUser:string|null=sessionStorage.getItem('isUser');
+  isCustomer:string|null=sessionStorage.getItem('isCustomer');
+
+  // Control edit form to appear or disappear
   show:Boolean=false
 
   ngOnInit(): void {
@@ -47,18 +53,19 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.orders.push(orderedProduct)
     const customer:string="doej";
-    const data:any={
+    const data:ShoppingCartItem={
       customer:customer,
-      products:this.orders
+      products:orderedProduct
     }
-    this.http.post((backendURL+"post"),data,{ responseType: 'text' }).subscribe(()=>{
-      alert("Order created!")
-    })
+    this.productService.checkOut(data)
+  }
+  // Go To Shopping Cart Page
+  redirect(){
+    this.router.navigate(['/shoppingCartPage'])
   }
 
-  // Method to edit a product
-  editProduct():void{
-    this.product$?.subscribe((data:ProductItem)=>{ this.productService.modifyProduct(false,data)})
+  public showForm():void{
+    this.productService.showForm(this.id)
   }
 
 }

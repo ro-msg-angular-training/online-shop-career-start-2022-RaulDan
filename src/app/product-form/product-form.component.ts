@@ -30,8 +30,21 @@ export class ProductFormComponent implements OnInit {
   })
 
 
-  onSubmit():void{
-    console.log(this.productForm.value.category)
+  onSubmit(product:ProductItem):void{
+    const editedProduct:ProductItem={
+      id:Number(product.id) ,
+      category:this.productForm.value['category']! ==='' ? (product?.category) : (this.productForm.value['category']!),
+      price:this.productForm.value['price']! ==='' ? (product.price) : Number(this.productForm.value['price']),
+      name:this.productForm.value['name']! ==='' ? (product.name) : (this.productForm.value['name']!),
+      description:this.productForm.value['description']! === '' ? (product.description) : (this.productForm.value['description']!),
+      image:this.productForm.value['image']==='' ? (product.image) : (this.productForm.value['image']!)
+    }
+    
+
+    this.productService.editProduct(editedProduct).subscribe(()=>{
+      alert("Product Edited Successfully")
+      window.location.reload()
+    })
   }
   ngOnInit(): void {
 
@@ -40,6 +53,9 @@ export class ProductFormComponent implements OnInit {
     this.product=this.productService.product
   }
 
+  public cancel(product:ProductItem):void{
+    this.productForm.setValue({id:product.id!.toString(), name:product.name!,image:product.image, category:product.category!,price:product.price!.toString(),description:product.description})
+  }
 
   
 

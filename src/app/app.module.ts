@@ -12,6 +12,8 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddProductFormComponent } from './add-product-form/add-product-form.component';
 import { EditProductFormComponent } from './edit-product-form/edit-product-form.component';
+import { LoginComponent } from './login/login.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +23,9 @@ import { EditProductFormComponent } from './edit-product-form/edit-product-form.
     NotFoundPageComponent,
     ProductFormComponent,
     AddProductFormComponent,
-    EditProductFormComponent
+    EditProductFormComponent,
+    LoginComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,

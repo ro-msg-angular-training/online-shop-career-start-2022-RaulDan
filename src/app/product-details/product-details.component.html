@@ -1,10 +1,10 @@
 <div *ngIf="(product$ | async) as product">
 
-<button>Add To Cart</button>
-<button (click)="deleteProduct()">Delete Item</button>
+<button (click)="redirect()">See Shopping Cart</button>
+<button (click)="deleteProduct()" [disabled]="isAdmin==='false'">Delete Item</button>
 <input type="number" placeholder="Enter quantity yout want to buy" #quantity/>
-<button (click)="checkOut(quantity.value)">Checkout</button>
-<button (click)="editProduct()">Edit Product</button>
+<button (click)="checkOut(quantity.value)" [disabled]="isCustomer==='false'">Checkout</button>
+<button (click)="showForm()" [disabled]="isAdmin==='false'">Edit Product</button>
 <h1>{{product.name}}</h1>
 <h2>{{product.price}}</h2>
 <h2>{{product.category}}</h2>

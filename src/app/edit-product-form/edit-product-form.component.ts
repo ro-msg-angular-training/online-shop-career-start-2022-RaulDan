@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder,Validators } from '@angular/forms';
+import { ProductService } from '../Services/productService';
 
 @Component({
   selector: 'app-edit-product-form',
@@ -7,7 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditProductFormComponent implements OnInit {
 
-  constructor() { }
+  editProductForm=this.fb.group({
+    id:['',Validators.required],
+    name:['',Validators.required],
+    image:['',Validators.required],
+    description:['',Validators.required],
+    price:['',Validators.required],
+    category:['',Validators.required]
+  })
+
+  constructor(
+    private fb:FormBuilder,
+    private productService:ProductService
+  ) { }
 
   ngOnInit(): void {
   }

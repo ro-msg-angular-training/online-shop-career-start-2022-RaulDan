@@ -1,4 +1,4 @@
-<button class="button" (click)="addProduct()">Add A New Product</button>
+<button class="button" (click)="addProduct()" [disabled]="isAdmin==='false'">Add A New Product</button>
 
 <button (click)="handleClick()" class="button">
     Show More Products

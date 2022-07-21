@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="table">
+        <div class="table-header">
+            <div class="header__item"><a id="name" class="filter__link" href="#">ID Product</a></div>
+            <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Quantity</a>
+            </div>
+            <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Details</a>
+            </div>
+
+        </div>
+
+        
+            <div *ngFor="let item of items">
+                <div class="table-content">
+                    <div class="table-row">
+                        <div class="table-data">{{item.products.productId}}</div>
+                        <div class="table-data">{{item.products.quantity}}</div>
+                        <div class="table-data"><button (click)="redirect(item.products.productId)">Details</button></div>
+
+                    </div>
+                </div>
+           
+
+
+        </div>
+    </div>

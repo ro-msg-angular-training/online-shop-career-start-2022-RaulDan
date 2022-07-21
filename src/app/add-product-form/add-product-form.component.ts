@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { backendURL } from 'src/utils';
-import { HttpClient } from '@angular/common/http';
 import { ProductItem } from 'src/ProductItem';
+import { ProductService } from '../Services/productService';
 
 @Component({
   selector: 'app-add-product-form',
@@ -14,7 +13,6 @@ export class AddProductFormComponent implements OnInit {
 
 
   addProductForm=this.fb.group({
-    id:['',Validators.required],
     name:['',Validators.required],
     image:['',Validators.required],
     description:['',Validators.required],
@@ -24,7 +22,7 @@ export class AddProductFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private httpClient:HttpClient
+    private productService:ProductService
     ) { }
 
   ngOnInit(): void {
@@ -32,7 +30,7 @@ export class AddProductFormComponent implements OnInit {
 
   onSubmit():void{
     const product:ProductItem={
-      id:Number(this.addProductForm.value['id']),
+      id:undefined,
       category:this.addProductForm.value['category']!,
       price:Number(this.addProductForm.value['price']),
       name:this.addProductForm.value['name']!,
@@ -40,13 +38,13 @@ export class AddProductFormComponent implements OnInit {
       image:this.addProductForm.value['image']!
 
     }
-    this.httpClient.post((backendURL+"products"),product,{ responseType: 'text' }).subscribe(()=>{
-      alert("Order created!")
+    this.productService.addProduct(product).subscribe((response:ProductItem)=>{
+      alert("Product Added Successfully")
     })
   }
 
   cancel():void{
-    this.addProductForm.setValue({id:'',name:'',image:'',category:'',price:'',description:''})
+    this.addProductForm.setValue({name:'',image:'',category:'',price:'',description:''})
   }
 
 }
