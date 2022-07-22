@@ -1,0 +1,47 @@
+<form  [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+    
+    <label  for="name">Product Name</label>
+    <br/>
+    <input  id="name" formControlName="name" >
+    <br/>
+    <span class=requiredMessage  *ngIf= " this.addProductForm.get('name')?.invalid">This field is required</span>
+    <br/>
+
+    <label  for="category">Category</label>
+    <br/>
+    <input  id="category" formControlName="category"  >
+    <br/>
+    <span class=requiredMessage  *ngIf= " this.addProductForm.get('category')?.invalid">This field is required</span>
+    <br/>
+
+    <label  for="price">Price</label>
+    <br/>
+    <input  id="price" formControlName="price"  >
+    <br/>
+    <span class=requiredMessage  *ngIf= " this.addProductForm.get('price')?.invalid">This field is required</span>
+    <br/>
+
+    <label for="image">Image</label>
+    <br/>
+    <input id="image" formControlName="image"  >
+    <br/>
+    <span class=requiredMessage  *ngIf= " this.addProductForm.get('image')?.invalid">This field is required</span>
+    <br/>
+
+    <br/>
+    <label for="description">Description</label>
+    <br/>
+    <input id="description" formControlName="description"  >
+    <br/>
+    <span class=requiredMessage  *ngIf= " this.addProductForm.get('description')?.invalid">This field is required</span>
+    <br/>
+    
+    <br/>
+    <button type="button" (click)="cancel()">Cancel</button>
+    <button type="submit"  class="saveButton">Save Changes</button>
+    <div *ngIf="success"  >
+            <h1 class="successInfo">Product Added Successfully</h1>
+        
+    </div>
+
+</form>

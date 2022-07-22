@@ -1,0 +1,17 @@
+<div *ngIf="(product$ | async) as product">
+
+<button (click)="redirect()">See Shopping Cart</button>
+<button (click)="deleteProduct()" [disabled]="isAdmin==='false'">Delete Item</button>
+<input type="number" placeholder="Enter quantity yout want to buy" #quantity/>
+<button (click)="checkOut(quantity.value)" [disabled]="isCustomer==='false'">Checkout</button>
+<button (click)="showEditForm()" [disabled]="isAdmin==='false'">Edit Product</button>
+<h1>{{product.name}}</h1>
+<h2>{{product.price}}</h2>
+<h2>{{product.category}}</h2>
+<h2>{{product.description}}</h2>
+<img src={{product.image}} alt={{product.name}} />
+<div *ngIf="show">
+    <app-product-form></app-product-form>
+
+</div>
+</div>

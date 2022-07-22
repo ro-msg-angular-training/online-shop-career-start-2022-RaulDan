@@ -1,0 +1,36 @@
+<button class="button" (click)="addProduct()" [disabled]="isAdmin==='false'">Add A New Product</button>
+
+<button (click)="handleClick()" class="button">
+    Show More Products
+</button>
+
+<div *ngIf="show">
+    <div class="container">
+        <div class="table">
+            <div class="table-header">
+                <div class="header__item"><a id="name" class="filter__link" href="#">Name</a></div>
+                <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Price</a>
+                </div>
+                <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Details</a>
+                </div>
+
+            </div>
+
+            <div *ngIf="(products$ | async) as products">
+                <div *ngFor="let product of products">
+                    <div class="table-content">
+                        <div class="table-row">
+                            <div class="table-data">{{product.name}}</div>
+                            <div class="table-data">{{product.price}}</div>
+                            <div class="table-data"><button (click)="redirect(product.id)">Details</button></div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
