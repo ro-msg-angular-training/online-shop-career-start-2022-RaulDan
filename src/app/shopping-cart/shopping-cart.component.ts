@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartItem } from 'src/ShoppingCardItem';
-import { ProductService } from '../Services/productService';
+import { ProductService } from '../Services/product.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-shopping-cart',
@@ -14,12 +14,13 @@ export class ShoppingCartComponent implements OnInit {
     private router:Router
   ) { }
 
-  items:ShoppingCartItem[]=this.productService.items
+  items:ShoppingCartItem[]=[]
 
   ngOnInit(): void {
+    this.items=this.productService.items
   }
 
-  redirect(id:Number):void{
+  redirect(id:number):void{
     this.router.navigate(['/productDetails',id])
   }
 

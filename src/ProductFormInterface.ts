@@ -1,7 +1,7 @@
 import { ProductItem } from "./ProductItem";
 
 export interface ProductFormInterface{
-    show:Boolean,
-    add:Boolean,
+    show:boolean,
+    add:boolean,
     product:ProductItem | undefined
 }

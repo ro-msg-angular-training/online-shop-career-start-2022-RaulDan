@@ -38,6 +38,10 @@
     
     <br/>
     <button type="button" (click)="cancel()">Cancel</button>
-    <button type="submit">Save Changes</button>
+    <button type="submit"  class="saveButton">Save Changes</button>
+    <div *ngIf="success"  >
+            <h1 class="successInfo">Product Added Successfully</h1>
+        
+    </div>
 
 </form>

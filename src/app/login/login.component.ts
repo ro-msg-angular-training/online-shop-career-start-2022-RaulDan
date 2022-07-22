@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent  {
 
   
   constructor(
@@ -19,18 +19,19 @@ export class LoginComponent implements OnInit {
   ) { }
 
 
-  errorMessage:Boolean=false
+  errorMessage:boolean=false
 
   loginForm=this.fb.group({
     username:[''],
     password:['']
   })
-  ngOnInit(): void {
-  }
+
 
   login():void{
-    this.authService.login(this.loginForm.value['username']!,this.loginForm.value['password']!).pipe(first())
-    .subscribe(data=>{
+    const username:string=this.loginForm.value['username']!;
+    const password:string=this.loginForm.value['password']!
+    this.authService.login(username,password).pipe(first())
+    .subscribe(()=>{
       this.errorMessage=false;
       this.router.navigate(['/products'])
       

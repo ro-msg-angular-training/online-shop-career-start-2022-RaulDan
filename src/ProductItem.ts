@@ -1,8 +1,8 @@
 export interface ProductItem{
-    id:Number|undefined,
+    id:number|undefined,
     name:string,
     category:string,
     image:string,
-    price:Number,
+    price:number,
     description:string
 }

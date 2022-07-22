@@ -1,3 +1,12 @@
+
+  .saveButton:hover {
+    background: #06D85F;
+  }
+
+.successInfo{
+  color:#2a09a1
+}
+
 .requiredMessage{
-    color: red;
+  color:red
 }

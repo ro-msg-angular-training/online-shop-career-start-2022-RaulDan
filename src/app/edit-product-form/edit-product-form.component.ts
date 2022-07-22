@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,Validators } from '@angular/forms';
-import { ProductService } from '../Services/productService';
+import { ProductService } from '../Services/product.service';
 
 @Component({
   selector: 'app-edit-product-form',
   templateUrl: './edit-product-form.component.html',
   styleUrls: ['./edit-product-form.component.css']
 })
-export class EditProductFormComponent implements OnInit {
+export class EditProductFormComponent  {
 
   editProductForm=this.fb.group({
     id:['',Validators.required],
@@ -23,7 +23,6 @@ export class EditProductFormComponent implements OnInit {
     private productService:ProductService
   ) { }
 
-  ngOnInit(): void {
-  }
+ 
 
 }

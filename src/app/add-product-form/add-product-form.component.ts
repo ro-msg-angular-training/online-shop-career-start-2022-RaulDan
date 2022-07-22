@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ProductItem } from 'src/ProductItem';
-import { ProductService } from '../Services/productService';
+import { ProductService } from '../Services/product.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-add-product-form',
@@ -20,27 +21,30 @@ export class AddProductFormComponent implements OnInit {
     category:['',Validators.required]
   })
 
+  success:boolean|null=null
+
   constructor(
     private fb: FormBuilder,
     private productService:ProductService
     ) { }
-
   ngOnInit(): void {
+    this.success=false;
   }
 
   onSubmit():void{
     const product:ProductItem={
       id:undefined,
       category:this.addProductForm.value['category']!,
-      price:Number(this.addProductForm.value['price']),
+      price: parseInt(this.addProductForm.value['price']!),  
       name:this.addProductForm.value['name']!,
       description:this.addProductForm.value['description']!,
       image:this.addProductForm.value['image']!
 
     }
-    this.productService.addProduct(product).subscribe((response:ProductItem)=>{
-      alert("Product Added Successfully")
+    this.productService.addProduct(product).pipe(first()).subscribe(()=>{
+      this.success=true
     })
+    
   }
 
   cancel():void{

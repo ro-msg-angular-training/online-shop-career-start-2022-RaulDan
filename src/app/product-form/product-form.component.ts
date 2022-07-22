@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { first, Observable } from 'rxjs';
 import { ProductItem } from 'src/ProductItem';
-import { ProductService } from '../Services/productService';
+import { ProductService } from '../Services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
@@ -10,17 +12,14 @@ import { ProductService } from '../Services/productService';
 })
 export class ProductFormComponent implements OnInit {
 
-  constructor(public productService:ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private router:Router
+  ) { }
 
-  // Check if the product is edited or added
-  add:Boolean=true
+  product$:Observable<ProductItem> | undefined
 
-  // Check if the form can be shown or not
-  show:Boolean=false
-
-  product:ProductItem | undefined;
-  
-  productForm=new FormGroup({
+  productForm = new FormGroup({
     id: new FormControl(''),
     name: new FormControl(''),
     category: new FormControl(''),
@@ -30,33 +29,30 @@ export class ProductFormComponent implements OnInit {
   })
 
 
-  onSubmit(product:ProductItem):void{
-    const editedProduct:ProductItem={
-      id:Number(product.id) ,
-      category:this.productForm.value['category']! ==='' ? (product?.category) : (this.productForm.value['category']!),
-      price:this.productForm.value['price']! ==='' ? (product.price) : Number(this.productForm.value['price']),
-      name:this.productForm.value['name']! ==='' ? (product.name) : (this.productForm.value['name']!),
-      description:this.productForm.value['description']! === '' ? (product.description) : (this.productForm.value['description']!),
-      image:this.productForm.value['image']==='' ? (product.image) : (this.productForm.value['image']!)
+  onSubmit(product: ProductItem): void {
+    const editedProduct: ProductItem = {
+      id: product.id,
+      category: this.productForm.value['category']! === '' ? (product?.category) : (this.productForm.value['category']!),
+      price: this.productForm.value['price']! === '' ? (product.price) : parseInt(this.productForm.value['price']!),
+      name: this.productForm.value['name']! === '' ? (product.name) : (this.productForm.value['name']!),
+      description: this.productForm.value['description']! === '' ? (product.description) : (this.productForm.value['description']!),
+      image: this.productForm.value['image'] === '' ? (product.image) : (this.productForm.value['image']!)
     }
-    
 
-    this.productService.editProduct(editedProduct).subscribe(()=>{
-      alert("Product Edited Successfully")
-      window.location.reload()
+    this.productService.editProduct(editedProduct).pipe(first()).subscribe(() => {
+      alert("Product Edited Successfully");
+      this.router.navigate(['/products'])
     })
   }
   ngOnInit(): void {
 
-    this.show=this.productService.show;
-    this.add=this.productService.add;
-    this.product=this.productService.product
+    this.product$ = this.productService.getProduct()
   }
 
-  public cancel(product:ProductItem):void{
-    this.productForm.setValue({id:product.id!.toString(), name:product.name!,image:product.image, category:product.category!,price:product.price!.toString(),description:product.description})
+  public cancel(product: ProductItem): void {
+    this.productForm.setValue({ id: product.id!.toString(), name: product.name!, image: product.image, category: product.category!, price: product.price!.toString(), description: product.description })
   }
 
-  
+
 
 }

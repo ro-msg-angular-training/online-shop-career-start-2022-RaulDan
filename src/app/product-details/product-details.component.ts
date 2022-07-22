@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { backendURL } from 'src/utils';
+import { backendURL } from 'src/environments/environment';
 import { ProductItem } from 'src/ProductItem';
 import { Order } from 'src/Order';
-import { ProductService } from '../Services/productService';
+import { ProductService } from '../Services/product.service';
 import { ShoppingCartItem } from 'src/ShoppingCardItem';
+import { AuthService } from '../Services/auth.service';
 
 @Component({
   selector: 'app-product-details',
@@ -15,57 +16,62 @@ import { ShoppingCartItem } from 'src/ShoppingCardItem';
 })
 export class ProductDetailsComponent implements OnInit {
 
-  id:Number=0;
-  product$:Observable<ProductItem> | undefined
-  orders:Order[]=[]
+  id: number = 0;
+  product$: Observable<ProductItem> | undefined
+  orders: Order[] = []
 
   constructor(
-    private route:ActivatedRoute,
-    private router:Router,
-    private http:HttpClient,
-    private productService:ProductService
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private productService: ProductService,
+    private authService: AuthService
   ) { }
 
-  isAdmin:string|null=sessionStorage.getItem('isAdmin');
-  isUser:string|null=sessionStorage.getItem('isUser');
-  isCustomer:string|null=sessionStorage.getItem('isCustomer');
+
 
   // Control edit form to appear or disappear
-  show:Boolean=false
+  show: boolean = false
+  isAdmin: string | null = null
+  isUser: string | null = null
+  isCustomer: string | null = null
 
   ngOnInit(): void {
-    this.id=Number(this.route.snapshot.paramMap.get('id'));// Get product id
-    this.product$=this.http.get<ProductItem>(backendURL+'products/'+this.id)
+    this.id = parseInt(this.route.snapshot.paramMap.get('id')!)// Get product id
+    this.product$ = this.productService.getProduct(this.id)
+    this.isAdmin = sessionStorage.getItem('isAdmin');
+    this.isUser = sessionStorage.getItem('isUser');
+    this.isCustomer = sessionStorage.getItem('isCustomer');
   }
 
   // Delete a Product Method
-  deleteProduct():void{
-    this.http.delete(`${backendURL}products/${this.id}`).subscribe((data)=>console.log(data))
+  deleteProduct(): void {
+    this.http.delete(`${backendURL}products/${this.id}`)
     alert("Item deleted successfully!")
-    this.router.navigate(['/'])
+    this.router.navigate(['/products'])
   }
 
   // Make an order Method
-  checkOut(quantity:string):void{
-    const orderedProduct:Order={
-      productId:this.id,
-      quantity:Number(quantity)
+  checkOut(quantity: string): void {
+    const orderedProduct: Order = {
+      productId: this.id,
+      quantity: parseInt(quantity)
     }
     this.orders.push(orderedProduct)
-    const customer:string="doej";
-    const data:ShoppingCartItem={
-      customer:customer,
-      products:orderedProduct
+    const customer: string = this.authService.user?.username!;
+    const data: ShoppingCartItem = {
+      customer: customer,
+      products: orderedProduct
     }
     this.productService.checkOut(data)
   }
   // Go To Shopping Cart Page
-  redirect(){
+  redirect() {
     this.router.navigate(['/shoppingCartPage'])
   }
 
-  public showForm():void{
-    this.productService.showForm(this.id)
+  public showEditForm(): void {
+    this.show = !this.show
   }
 
 }

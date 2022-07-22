@@ -1,4 +1,4 @@
 export interface Order{
-    productId:Number,
-    quantity:Number
+    productId:number,
+    quantity:number
 }

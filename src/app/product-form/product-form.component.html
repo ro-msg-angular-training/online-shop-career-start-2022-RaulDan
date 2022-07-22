@@ -1,37 +1,37 @@
 <!-- app-product-form -->
 
-<div *ngIf="productService.show">
-<form  [formGroup]="productForm" (ngSubmit)="onSubmit(productService.product!)">
+<div *ngIf="(product$ | async) as product">
+<form  [formGroup]="productForm" (ngSubmit)="onSubmit(product)">
     <label  for="id">ID: </label>
     <br/>
-    <input id="id" type="text" formControlName="id" readonly placeholder={{productService.product?.id}}>
+    <input id="id" type="text" formControlName="id" readonly placeholder={{product?.id}}>
     
     <br/>
     <label  for="name">Product Name</label>
     <br/>
-    <input  id="name" formControlName="name"  placeholder={{productService.product?.name}} >
+    <input  id="name" formControlName="name"  placeholder={{product?.name}} >
     <br/>
 
     <label  for="category">Category</label>
     <br/>
-    <input  id="category" formControlName="category" placeholder={{productService.product?.category}} >
+    <input  id="category" formControlName="category" placeholder={{product?.category}} >
     <br/>
 
     <label  for="price">Price</label>
     <br/>
-    <input  id="price" formControlName="price"  placeholder={{productService.product?.price}} >
+    <input  id="price" formControlName="price"  placeholder={{product?.price}} >
 
     <br/>
     <label for="image">Image</label>
     <br/>
-    <input id="image" formControlName="image"  placeholder={{productService.product?.image}} >
+    <input id="image" formControlName="image"  placeholder={{product?.image}} >
 
     <br/>
     <label for="description">Description</label>
     <br/>
-    <input id="description" formControlName="description"  placeholder={{productService.product?.description}} >
+    <input id="description" formControlName="description"  placeholder={{product?.description}} >
     <br/>
-    <button type="button" (click)="cancel(productService.product!)">Cancel</button>
+    <button type="button" (click)="cancel(product!)">Cancel</button>
     <button type="submit">Save Changes</button>
 
 
