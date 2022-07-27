@@ -4,6 +4,9 @@ import { first, Observable } from 'rxjs';
 import { ProductItem } from 'src/ProductItem';
 import { ProductService } from '../Services/product.service';
 import { Router } from '@angular/router';
+import { editProduct } from '../store/products/products.actions';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/products/app.state';
 
 @Component({
   selector: 'app-product-form',
@@ -14,7 +17,8 @@ export class ProductFormComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private router:Router
+    private router:Router,
+    private store:Store<AppState>
   ) { }
 
   product$:Observable<ProductItem> | undefined
@@ -39,10 +43,10 @@ export class ProductFormComponent implements OnInit {
       image: this.productForm.value['image'] === '' ? (product.image) : (this.productForm.value['image']!)
     }
 
-    this.productService.editProduct(editedProduct).pipe(first()).subscribe(() => {
-      alert("Product Edited Successfully");
-      this.router.navigate(['/products'])
-    })
+    this.store.dispatch(editProduct({product:editedProduct}))
+    alert("Product Edited Successfully")
+    this.router.navigate(['/products'])
+
   }
   ngOnInit(): void {
 
