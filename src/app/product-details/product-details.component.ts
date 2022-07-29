@@ -30,21 +30,19 @@ export class ProductDetailsComponent implements OnInit {
 
 
 
-  // Control edit form to appear or disappear
   show: boolean = false
   isAdmin: string | null = null
   isUser: string | null = null
   isCustomer: string | null = null
 
   ngOnInit(): void {
-    this.id = parseInt(this.route.snapshot.paramMap.get('id')!)// Get product id
+    this.id = parseInt(this.route.snapshot.paramMap.get('id')!)
     this.isAdmin = sessionStorage.getItem('isAdmin');
     this.isUser = sessionStorage.getItem('isUser');
     this.isCustomer = sessionStorage.getItem('isCustomer');
     this.store.dispatch(getProduct({id:this.id}))
   }
-  
-  // Delete a Product Method
+
   deleteProduct(): void {
     this.store.dispatch(deleteProduct({id:this.id}))
     alert("Item deleted successfully!")

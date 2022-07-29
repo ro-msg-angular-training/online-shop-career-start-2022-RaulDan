@@ -1,20 +1,23 @@
 <div *ngIf="(item$ | async) as product">
 
-<button mat-flat-button (click)="redirect()" color="success">See Shopping Cart</button>
-<button mat-flat-button color="warn" (click)="deleteProduct()" [disabled]="isAdmin==='false'"><mat-icon>delete</mat-icon>Delete Item</button>
+    <button mat-flat-button (click)="redirect()" color="success">See Shopping Cart</button>
+    <button mat-flat-button color="warn" (click)="deleteProduct()" [disabled]="isAdmin==='false'">
+        <mat-icon>delete</mat-icon>Delete Item
+    </button>
 
-<!-- <input matInput  -->
 
-<input matInput type="number" placeholder="Enter quantity yout want to buy" #quantity/>
-<button mat-flat-button class="checkOutButton" (click)="checkOut(quantity.value)" [disabled]="isCustomer==='false'">Checkout</button>
-<button mat-flat-button color="accent" (click)="showEditForm()" [disabled]="isAdmin==='false'" class="editButton">Edit Product</button>
-<h1>{{product.name}}</h1>
-<h2>{{product.price}}</h2>
-<h2>{{product.category}}</h2>
-<h2>{{product.description}}</h2>
-<img src={{product.image}} alt={{product.name}} />
-<div *ngIf="show">
-    <app-product-form></app-product-form>
+    <input matInput type="number" placeholder="Enter quantity yout want to buy" #quantity />
+    <button mat-flat-button class="checkOutButton" (click)="checkOut(quantity.value)"
+        [disabled]="isCustomer==='false'">Checkout</button>
+    <button mat-flat-button color="accent" (click)="showEditForm()" [disabled]="isAdmin==='false'"
+        class="editButton">Edit Product</button>
+    <h1>{{product.name}}</h1>
+    <h2>{{product.price}}</h2>
+    <h2>{{product.category}}</h2>
+    <h2>{{product.description}}</h2>
+    <img src={{product.image}} alt={{product.name}} />
+    <div *ngIf="show">
+        <app-product-form></app-product-form>
 
-</div>
+    </div>
 </div>

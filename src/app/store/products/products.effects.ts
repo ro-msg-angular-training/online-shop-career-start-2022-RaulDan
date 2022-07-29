@@ -19,23 +19,18 @@ export class ProductEffects {
     ) { }
 
 
-    // Run this code when a load action is dispatched
     loadProducts$ = createEffect(() =>
         this.action$.pipe(
             ofType(getAllProducts),
             mergeMap(() =>
-                // Call the get method, convert it to an observable
                 from(this.productService.getAllProducts()).pipe(
-                    // Take the returned value and return a new success action containing the items
                     map((products) => getAllProductsSuccess({ products: products })),
-                    // Or... if it errors return a new failure action containing the error
                     catchError((error) => of(getAllProductsError({ error })))
                 )
             )
         )
     );
 
-    // Run this code every time when addNewProduct is dispached
 
     addProduct$ = createEffect(() => {
         return this.action$.pipe(
@@ -49,7 +44,6 @@ export class ProductEffects {
         ); 
       });
 
-    // Run this code every tie when editProdut is dispached
     editProduct$=createEffect(()=>{
         return this.action$.pipe(
             ofType(editProduct),
@@ -62,7 +56,6 @@ export class ProductEffects {
         )
     })
 
-    // Run this code every time when deleteProduct is dispached
     deleteProduct$ = createEffect(() =>
         this.action$.pipe(
             ofType(deleteProduct),
@@ -75,7 +68,6 @@ export class ProductEffects {
         )
     )
 
-    // Run this code every tine when getProduct is dispached (every time a single product is get from the backend)
     getProduct$=createEffect(()=>
             this.action$.pipe(
                 ofType(getProduct),

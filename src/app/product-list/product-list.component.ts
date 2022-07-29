@@ -14,17 +14,17 @@ import { AppState } from '../store/products/app.state';
 })
 export class ProductListComponent implements OnInit {
 
-  products:Product[]=[]
-  public allProducts$=this.store.select(selectAllProducts);
-  displayedColumns: string[]=['product-name','product-price','product-details']
+  products: Product[] = []
+  public allProducts$ = this.store.select(selectAllProducts);
+  displayedColumns: string[] = ['product-name', 'product-price', 'product-details']
 
   isAdmin: string | null = null
   isUser: string | null = null
-  isCustomer: string | null = null  
+  isCustomer: string | null = null
 
   constructor(private router: Router,
     public authService: AuthService,
-    private store:Store<AppState>
+    private store: Store<AppState>
   ) { }
 
   show = false;
@@ -35,22 +35,17 @@ export class ProductListComponent implements OnInit {
   }
 
   // Redirect to product details page of a product
-  redirect(id: number|undefined) {
+  redirect(id: number | undefined) {
     this.router.navigate(['/productDetails', id])
   }
 
-  // Add A Product To Data Base  
   addProduct(): void {
     this.router.navigate(['/addProduct'])
   }
 
-  // Get all products from database
   ngOnInit(): void {
 
-    // this.products$ = this.http.get<Product[]>(backendURL + 'products');
-
     this.store.dispatch(getAllProducts())
-    
     this.isAdmin = sessionStorage.getItem('isAdmin');
     this.isUser = sessionStorage.getItem('isUser');
     this.isCustomer = sessionStorage.getItem('isCustomer');

@@ -21,17 +21,10 @@ export class AuthService {
   redirectUrl:string|null=null
   user:UserInterface | null=null
   
-  login2(credentials: Credentials): Observable<UserInterface> {
-    return this.httpClient.post<UserInterface>(`${backendURL}/login`, credentials).pipe(tap((user) => {
-      localStorage.setItem("username", user.username);
-    }));
-  }
+ 
   public login(credentials:Credentials):Observable<UserInterface>{
    
-    // return null;
-    // return this.httpClient.post<UserInterface>(`${backendURL}/login`, credentials).pipe(tap((user) => {
-    //   localStorage.setItem("username", user.username);
-    // }))
+   
     return this.httpClient.post<UserInterface>(backendURL+'login',  credentials )
             .pipe(map(user => {
               

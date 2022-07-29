@@ -1,14 +1,12 @@
 import { Injectable } from "@angular/core";
 import { ProductItem } from "src/ProductItem";
-import { first, map, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { backendURL } from "src/utils";
 import { HttpClient } from "@angular/common/http";
 import { ShoppingCartItem } from "src/ShoppingCardItem";
-import { Product } from "src/Product";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { AppState } from "../store/products/app.state";
-import { getSingleProduct } from "../store/products/products.selectors";
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -16,12 +14,10 @@ export class ProductService {
 
     constructor(
         private httpClient: HttpClient,
-        private router:Router,
-        private store:Store<AppState>
+        private router: Router,
     ) { }
     show: boolean = false;
     product$: Observable<ProductItem> | undefined
-    // item$=this.store.select(getSingleProduct)
     items: ShoppingCartItem[] = []
 
     public getProduct(id?: number): Observable<ProductItem> {
@@ -29,16 +25,15 @@ export class ProductService {
             return this.product$!;
         }
         return this.httpClient.get<ProductItem>(backendURL + 'products/' + id);
-        // return this.product$
     }
 
-    public deleteProduct(id:number){
+    public deleteProduct(id: number) {
         this.httpClient.delete(`${backendURL}products/${id}`)
         alert("Item deleted successfully!")
         this.router.navigate(['/products'])
     }
 
-    public delete(id:number){  
+    public delete(id: number) {
         return this.httpClient.delete(`${backendURL}products/${id}`)
     }
 
@@ -68,8 +63,8 @@ export class ProductService {
             this.items.push(item);
 
         }
-         return this.httpClient.post((backendURL+"post"),item,{responseType:'text'})
-        
+        return this.httpClient.post((backendURL + "post"), item, { responseType: 'text' })
+
     }
 
 
