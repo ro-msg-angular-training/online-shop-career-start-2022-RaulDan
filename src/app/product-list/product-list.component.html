@@ -5,32 +5,29 @@
 </button>
 
 <div *ngIf="show">
-    <div class="container">
-        <div class="table">
-            <div class="table-header">
-                <div class="header__item"><a id="name" class="filter__link" href="#">Name</a></div>
-                <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Price</a>
-                </div>
-                <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Details</a>
-                </div>
+   
+    <table mat-table [dataSource]="allProducts$" class="mat-elevation-z8">
 
-            </div>
-
-            <div *ngIf="(products$ | async) as products">
-                <div *ngFor="let product of products">
-                    <div class="table-content">
-                        <div class="table-row">
-                            <div class="table-data">{{product.name}}</div>
-                            <div class="table-data">{{product.price}}</div>
-                            <div class="table-data"><button (click)="redirect(product.id)">Details</button></div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-
-
-    </div>
+        <!-- Name Column -->
+        <ng-container matColumnDef="product-name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+        </ng-container>
+      
+        <!-- Price Column -->
+        <ng-container matColumnDef="product-price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let product"> {{product.price}} </td>
+        </ng-container>
+      
+        <!-- Details Column -->
+        <ng-container matColumnDef="product-details">
+          <th mat-header-cell *matHeaderCellDef> Product Details </th>
+          <td mat-cell *matCellDef="let product"> <button mat-flat-button color="primary"  (click)="redirect(product.id)">Details</button> </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row  (click)="redirect(row.id)" *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    
+</div>

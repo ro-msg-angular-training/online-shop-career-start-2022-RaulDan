@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { backendURL } from 'src/environments/environment';
-import { map } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { UserInterface } from 'src/Users';
 import { Role } from 'src/Users';
+import { Credentials } from '../Credentials';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,11 +20,12 @@ export class AuthService {
   isLoggedIn=false;
   redirectUrl:string|null=null
   user:UserInterface | null=null
-
-
-  public login(username:string,password:string){
+  
+ 
+  public login(credentials:Credentials):Observable<UserInterface>{
    
-    return this.httpClient.post<UserInterface>(backendURL+'login', { username, password })
+   
+    return this.httpClient.post<UserInterface>(backendURL+'login',  credentials )
             .pipe(map(user => {
               
                 localStorage.setItem("isLoggedIn",'true')

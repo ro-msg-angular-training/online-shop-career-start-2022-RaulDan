@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { backendURL } from 'src/environments/environment';
-import { ProductItem } from 'src/ProductItem';
 import { Order } from 'src/Order';
-import { ProductService } from '../Services/product.service';
 import { ShoppingCartItem } from 'src/ShoppingCardItem';
 import { AuthService } from '../Services/auth.service';
+import { checkOut,deleteProduct,getProduct } from '../store/products/products.actions';
+import { Store } from '@ngrx/store';
+import { getSingleProduct } from '../store/products/products.selectors';
+import { AppState } from '../store/products/app.state';
+
 
 @Component({
   selector: 'app-product-details',
@@ -17,36 +17,34 @@ import { AuthService } from '../Services/auth.service';
 export class ProductDetailsComponent implements OnInit {
 
   id: number = 0;
-  product$: Observable<ProductItem> | undefined
+  item$=this.store.select(getSingleProduct)
   orders: Order[] = []
+ 
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient,
-    private productService: ProductService,
-    private authService: AuthService
+    private authService: AuthService,
+    private store:Store<AppState>
   ) { }
 
 
 
-  // Control edit form to appear or disappear
   show: boolean = false
   isAdmin: string | null = null
   isUser: string | null = null
   isCustomer: string | null = null
 
   ngOnInit(): void {
-    this.id = parseInt(this.route.snapshot.paramMap.get('id')!)// Get product id
-    this.product$ = this.productService.getProduct(this.id)
+    this.id = parseInt(this.route.snapshot.paramMap.get('id')!)
     this.isAdmin = sessionStorage.getItem('isAdmin');
     this.isUser = sessionStorage.getItem('isUser');
     this.isCustomer = sessionStorage.getItem('isCustomer');
+    this.store.dispatch(getProduct({id:this.id}))
   }
 
-  // Delete a Product Method
   deleteProduct(): void {
-    this.http.delete(`${backendURL}products/${this.id}`)
+    this.store.dispatch(deleteProduct({id:this.id}))
     alert("Item deleted successfully!")
     this.router.navigate(['/products'])
   }
@@ -63,7 +61,7 @@ export class ProductDetailsComponent implements OnInit {
       customer: customer,
       products: orderedProduct
     }
-    this.productService.checkOut(data)
+    this.store.dispatch(checkOut({item:data}))
   }
   // Go To Shopping Cart Page
   redirect() {

@@ -4,7 +4,9 @@ import { Validators } from '@angular/forms';
 import { ProductItem } from 'src/ProductItem';
 import { ProductService } from '../Services/product.service';
 import { first } from 'rxjs';
-
+import { addNewProduct } from '../store/products/products.actions';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/products/app.state';
 @Component({
   selector: 'app-add-product-form',
   templateUrl: './add-product-form.component.html',
@@ -25,6 +27,7 @@ export class AddProductFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private store:Store<AppState>,
     private productService:ProductService
     ) { }
   ngOnInit(): void {
@@ -41,9 +44,11 @@ export class AddProductFormComponent implements OnInit {
       image:this.addProductForm.value['image']!
 
     }
-    this.productService.addProduct(product).pipe(first()).subscribe(()=>{
-      this.success=true
-    })
+    
+    this.store.dispatch(addNewProduct({product:product}))
+    this.success=true
+
+    
     
   }
 
